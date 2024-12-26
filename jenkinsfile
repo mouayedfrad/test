@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+    stages {
+        stage('Clone Repo') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'npm install'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'npm test'
+            }
+        }
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t test-app .'
+            }
+        }
+        stage('Push to Docker Hub') {
+            steps {
+                withDockerRegistry([credentialsId: 'mouayedfrad', url: '']) {
+                    sh 'docker push test-app'
+                }
+            }
+        }
+    }
+}
