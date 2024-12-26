@@ -1,0 +1,7 @@
+version: "3.9"  
+
+services:
+  test-app:
+    image: mouayedfrad/test-app:latest  
+    ports:
+      - "80:3000"  
